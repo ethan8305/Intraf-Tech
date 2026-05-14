@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Intraf Tech — AI Solutions for Small Businesses</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0a0a0a;
+      --surface: #111111;
+      --border: #1e1e1e;
+      --accent: #c8f135;
+      --accent-dim: rgba(200,241,53,0.12);
+      --text: #f0f0f0;
+      --muted: #888;
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'DM Sans', sans-serif;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.5rem 6vw;
+      background: rgba(10,10,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 800;
+      font-size: 1.2rem;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .nav-logo span { color: var(--accent); }
+
+    nav ul {
+      display: flex; gap: 2.5rem; list-style: none;
+    }
+
+    nav ul a {
+      font-size: 0.85rem;
+      font-weight: 400;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: color 0.2s;
+    }
+
+    nav ul a:hover { color: var(--text); }
+
+    /* HERO */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 10rem 6vw 6rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -20%; left: -10%;
+      width: 60vw; height: 60vw;
+      background: radial-gradient(circle, rgba(200,241,53,0.06) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-tag {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 2rem;
+    }
+
+    .hero-tag::before {
+      content: '';
+      display: block;
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      font-weight: 800;
+      line-height: 1.0;
+      letter-spacing: -0.03em;
+      max-width: 900px;
+      margin-bottom: 2rem;
+    }
+
+    h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: clamp(1rem, 1.5vw, 1.15rem);
+      color: var(--muted);
+      max-width: 520px;
+      margin-bottom: 3rem;
+      font-weight: 300;
+      line-height: 1.75;
+    }
+
+    .hero-cta {
+      display: inline-flex; align-items: center; gap: 0.75rem;
+      background: var(--accent);
+      color: #0a0a0a;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.9rem;
+      letter-spacing: 0.02em;
+      padding: 1rem 2rem;
+      border-radius: 2px;
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+
+    .hero-cta:hover { opacity: 0.85; }
+
+    /* SERVICES */
+    .services {
+      padding: 8rem 6vw;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 0.72rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 4rem;
+      display: flex; align-items: center; gap: 0.75rem;
+    }
+
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: var(--border);
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
+    }
+
+    .service-card {
+      background: var(--bg);
+      padding: 2.5rem;
+      transition: background 0.2s;
+    }
+
+    .service-card:hover { background: var(--surface); }
+
+    .service-num {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+    }
+
+    .service-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      margin-bottom: 0.75rem;
+    }
+
+    .service-card p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    /* HOW */
+    .how {
+      padding: 8rem 6vw;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: center;
+    }
+
+    .how h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .how p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+      margin-bottom: 1rem;
+    }
+
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+
+    .step {
+      display: flex;
+      gap: 1.5rem;
+      padding: 1.75rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .step:last-child { border-bottom: none; }
+
+    .step-num {
+      font-family: var(--font-display);
+      font-size: 0.7rem;
+      font-weight: 800;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      padding-top: 0.15rem;
+      min-width: 32px;
+    }
+
+    .step-text h4 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin-bottom: 0.35rem;
+    }
+
+    .step-text p {
+      font-size: 0.85rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    /* CONTACT */
+    .contact {
+      padding: 8rem 6vw;
+      border-top: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6rem;
+      align-items: start;
+    }
+
+    .contact h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .contact p {
+      color: var(--muted);
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+
+    .contact-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      padding-top: 1rem;
+    }
+
+    .contact-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+      padding: 1.5rem;
+      border: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    .contact-item-label {
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .contact-item-value {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .contact-item-value a {
+      color: var(--text);
+      text-decoration: none;
+    }
+
+    .contact-item-value a:hover { color: var(--accent); }
+
+    /* PRIVACY POLICY */
+    .privacy {
+      padding: 8rem 6vw;
+      border-top: 1px solid var(--border);
+      max-width: 780px;
+    }
+
+    .privacy h2 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.5rem;
+    }
+
+    .privacy .updated {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 3rem;
+    }
+
+    .privacy h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      margin: 2rem 0 0.75rem;
+      color: var(--accent);
+    }
+
+    .privacy p, .privacy li {
+      font-size: 0.9rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .privacy ul {
+      padding-left: 1.25rem;
+      margin-top: 0.5rem;
+    }
+
+    .privacy li { margin-bottom: 0.4rem; }
+
+    /* FOOTER */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 6vw;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    footer p {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    footer a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+    }
+
+    footer a:hover { color: var(--accent); }
+
+    @media (max-width: 768px) {
+      .how, .contact { grid-template-columns: 1fr; gap: 3rem; }
+      nav ul { display: none; }
+    }
+
+    /* Fade in animation */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-tag, h1, .hero-sub, .hero-cta {
+      animation: fadeUp 0.7s ease forwards;
+      opacity: 0;
+    }
+
+    .hero-tag { animation-delay: 0.1s; }
+    h1 { animation-delay: 0.25s; }
+    .hero-sub { animation-delay: 0.4s; }
+    .hero-cta { animation-delay: 0.55s; }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a href="#" class="nav-logo">Intraf<span>.</span>Tech</a>
+  <ul>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#how">How it works</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li><a href="#privacy">Privacy</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-tag">AI Solutions for Small Businesses</div>
+  <h1>We build systems that<br/><em>work while you sleep.</em></h1>
+  <p class="hero-sub">Intraf Tech designs and deploys AI-powered automation for small businesses — from client communication bots to workflow optimisation tools. No technical knowledge needed on your end.</p>
+  <a href="#contact" class="hero-cta">Get in touch ↗</a>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-label">What we build</div>
+  <div class="services-grid">
+    <div class="service-card">
+      <div class="service-num">01</div>
+      <h3>AI WhatsApp Chatbots</h3>
+      <p>Automate client intake, route enquiries, and answer FAQs — 24/7, in any language. Reduce the need for dedicated phone lines and manual follow-ups.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">02</div>
+      <h3>Workflow Automation</h3>
+      <p>Identify and eliminate operational bottlenecks. We map your current processes, find where time is lost, and build systems that handle it automatically.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">03</div>
+      <h3>Website AI Assistants</h3>
+      <p>Embed intelligent chat assistants directly on your website. Trained on your content, they answer visitor questions and convert enquiries into bookings.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-num">04</div>
+      <h3>Managed AI Infrastructure</h3>
+      <p>We build, host, and maintain your AI systems. You stay focused on your business — we handle updates, monitoring, and improvements.</p>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div>
+    <div class="section-label">Process</div>
+    <h2>Simple from<br/>start to finish.</h2>
+    <p>We handle everything technical. You tell us the problem — we identify the right solution, build it, and keep it running.</p>
+    <p>Most clients are live within two weeks.</p>
+  </div>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-text">
+        <h4>Discovery call</h4>
+        <p>We learn about your business, your current workflows, and where you're losing time or clients.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-text">
+        <h4>Solution design</h4>
+        <p>We propose a specific system tailored to your needs with clear costs and outcomes.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-text">
+        <h4>Build & deploy</h4>
+        <p>We build and launch your system. You test it, give feedback, and we refine until it's right.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-text">
+        <h4>Ongoing support</h4>
+        <p>We maintain and improve your system on a simple monthly retainer. No surprises.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div>
+    <div class="section-label">Contact</div>
+    <h2>Let's talk about your business.</h2>
+    <p>Tell us what problem you're trying to solve and we'll get back to you within 24 hours.</p>
+  </div>
+  <div class="contact-details">
+    <div class="contact-item">
+      <span class="contact-item-label">Phone / WhatsApp</span>
+      <span class="contact-item-value"><a href="tel:+6591288942">+65 9128 8942</a></span>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Email</span>
+      <span class="contact-item-value"><a href="mailto:ethanishere13@gmail.com">ethanishere13@gmail.com</a></span>
+    </div>
+    <div class="contact-item">
+      <span class="contact-item-label">Based in</span>
+      <span class="contact-item-value">Singapore</span>
+    </div>
+  </div>
+</section>
+
+<!-- PRIVACY POLICY -->
+<section class="privacy" id="privacy">
+  <h2>Privacy Policy</h2>
+  <p class="updated">Last updated: May 2026</p>
+
+  <p>Intraf Tech ("we", "us", or "our") is committed to protecting your personal information. This Privacy Policy explains how we collect, use, and safeguard data when you interact with our services, including AI-powered chatbot systems we build and maintain.</p>
+
+  <h3>Information We Collect</h3>
+  <p>We may collect the following types of information:</p>
+  <ul>
+    <li>Contact information (name, phone number, email address) provided voluntarily</li>
+    <li>Messages sent through WhatsApp chatbot systems we operate on behalf of clients</li>
+    <li>Usage data and interaction logs for improving service quality</li>
+  </ul>
+
+  <h3>How We Use Your Information</h3>
+  <ul>
+    <li>To respond to your enquiries and provide requested services</li>
+    <li>To route your messages to the appropriate person or resource</li>
+    <li>To improve the accuracy and performance of our AI systems</li>
+    <li>To comply with legal obligations</li>
+  </ul>
+
+  <h3>Data Sharing</h3>
+  <p>We do not sell your personal data. We may share data with third-party service providers (such as cloud hosting and AI API providers) solely to operate our services. All third parties are bound by appropriate data protection agreements.</p>
+
+  <h3>Data Retention</h3>
+  <p>We retain personal data only as long as necessary to fulfil the purposes outlined in this policy, or as required by law.</p>
+
+  <h3>Your Rights</h3>
+  <p>You have the right to request access to, correction of, or deletion of your personal data held by us. To exercise these rights, contact us at ethanishere13@gmail.com.</p>
+
+  <h3>WhatsApp Messaging</h3>
+  <p>Our chatbot services operate via the WhatsApp Business API. Messages sent to our clients' business numbers may be processed by AI systems to generate responses. No message content is shared with third parties beyond what is necessary to operate the service.</p>
+
+  <h3>Contact</h3>
+  <p>For any privacy-related queries, contact us at: ethanishere13@gmail.com or +65 9128 8942.</p>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 Intraf Tech. All rights reserved.</p>
+  <a href="#privacy">Privacy Policy</a>
+</footer>
+
+</body>
+</html>
