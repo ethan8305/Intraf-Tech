@@ -166,6 +166,7 @@
       background: var(--border);
     }
 
+    /* SERVICES GRID – DESKTOP DEFAULT */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -173,22 +174,34 @@
       background: var(--border);
       border: 1px solid var(--border);
     }
- /* Mobile overrides go in a separate media block */     
-      @media (max-width: 768px) {
+    
+    .service-card {
+      background: var(--bg);
+      padding: 2.5rem;
+      transition: background 0.2s;
+    }
+    
+    .service-card:hover { 
+      background: var(--surface); 
+    }
+    
+    /* ... other styles ... */
+    
+    /* MOBILE OVERRIDES */
+    @media (max-width: 768px) {
       .how, .contact { 
         grid-template-columns: 1fr; 
         gap: 3rem; 
-    }
+      }
     
       nav ul { 
         display: none; 
-    }
+      }
     
-      /* Add this override */
       .services-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
+      }
+    } /* <— this brace must be here, after all mobile rules */
 
     .service-card {
       background: var(--bg);
