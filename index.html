@@ -16,7 +16,7 @@
       --accent-dim: rgba(200,241,53,0.12);
       --text: #f0f0f0;
       --muted: #888;
-      --font-display: 'Syne', sans-serif; /* keep for logo/headings */
+      --font-display: 'Syne', sans-serif;
       --font-body: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     }
 
@@ -166,7 +166,6 @@
       background: var(--border);
     }
 
-    /* SERVICES GRID – DESKTOP DEFAULT */
     .services-grid {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -174,34 +173,6 @@
       background: var(--border);
       border: 1px solid var(--border);
     }
-    
-    .service-card {
-      background: var(--bg);
-      padding: 2.5rem;
-      transition: background 0.2s;
-    }
-    
-    .service-card:hover { 
-      background: var(--surface); 
-    }
-    
-    /* ... other styles ... */
-    
-    /* MOBILE OVERRIDES */
-    @media (max-width: 768px) {
-      .how, .contact { 
-        grid-template-columns: 1fr; 
-        gap: 3rem; 
-      }
-    
-      nav ul { 
-        display: none; 
-      }
-    
-      .services-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-    } /* <— this brace must be here, after all mobile rules */
 
     .service-card {
       background: var(--bg);
@@ -298,7 +269,7 @@
       margin: 0;
     }
 
-    /* CONTACT */
+    /* ── CONTACT (fixed) ── */
     .contact {
       padding: 8rem 6vw;
       border-top: 1px solid var(--border);
@@ -308,7 +279,7 @@
       align-items: start;
     }
 
-    .contact h2 {
+    .contact-left h2 {
       font-family: var(--font-display);
       font-size: clamp(2rem, 3.5vw, 3rem);
       font-weight: 800;
@@ -317,43 +288,27 @@
       margin-bottom: 1.5rem;
     }
 
-    .contact p {
+    .contact-left p {
       color: var(--muted);
       font-size: 0.95rem;
       line-height: 1.8;
     }
 
-    .contact-details {
+    /* Stack of contact info cards on the right */
+    .contact-right {
       display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.75rem;
-      flex-wrap: wrap;
-  }
-
-    .contact-details span {
-    flex: 1 1 auto;
-  }
-    
-    .contact-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 0.75rem;
-      flex-wrap: wrap; /* allows stacking cleanly when too narrow */
-    }
-    
-    .contact-row span {
-      flex: 1 1 auto;
+      flex-direction: column;
+      gap: 1px;
+      background: var(--border);
+      border: 1px solid var(--border);
     }
 
     .contact-item {
+      background: var(--surface);
+      padding: 1.5rem;
       display: flex;
       flex-direction: column;
-      gap: 0.25rem;
-      padding: 1.5rem;
-      border: 1px solid var(--border);
-      background: var(--surface);
+      gap: 0.35rem;
     }
 
     .contact-item-label {
@@ -446,6 +401,7 @@
     @media (max-width: 768px) {
       .how, .contact { grid-template-columns: 1fr; gap: 3rem; }
       nav ul { display: none; }
+      .services-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     }
 
     /* Fade in animation */
@@ -463,6 +419,172 @@
     h1 { animation-delay: 0.25s; }
     .hero-sub { animation-delay: 0.4s; }
     .hero-cta { animation-delay: 0.55s; }
+
+    /* ── CUSTOM AI CHATBOT ── */
+    #chat-bubble {
+      position: fixed;
+      bottom: 1.75rem;
+      right: 1.75rem;
+      z-index: 9999;
+    }
+
+    #chat-toggle {
+      width: 56px; height: 56px;
+      border-radius: 50%;
+      background: var(--accent);
+      border: none;
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 24px rgba(200,241,53,0.25);
+      transition: transform 0.2s, opacity 0.2s;
+    }
+
+    #chat-toggle:hover { transform: scale(1.07); opacity: 0.9; }
+
+    #chat-toggle svg { width: 24px; height: 24px; color: #0a0a0a; }
+
+    #chat-window {
+      display: none;
+      flex-direction: column;
+      position: absolute;
+      bottom: calc(100% + 1rem);
+      right: 0;
+      width: 360px;
+      height: 520px;
+      background: #111;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      overflow: hidden;
+      box-shadow: 0 16px 48px rgba(0,0,0,0.6);
+    }
+
+    #chat-window.open { display: flex; }
+
+    .chat-header {
+      padding: 1rem 1.25rem;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .chat-header-info { display: flex; flex-direction: column; gap: 0.15rem; }
+
+    .chat-header-name {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 0.95rem;
+      color: var(--text);
+    }
+
+    .chat-header-status {
+      font-size: 0.7rem;
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+
+    #chat-close {
+      background: none;
+      border: none;
+      color: var(--muted);
+      cursor: pointer;
+      font-size: 1.2rem;
+      line-height: 1;
+      padding: 0.25rem;
+      transition: color 0.2s;
+    }
+
+    #chat-close:hover { color: var(--text); }
+
+    #chat-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+
+    .msg {
+      max-width: 82%;
+      font-size: 0.875rem;
+      line-height: 1.55;
+      padding: 0.65rem 0.9rem;
+      border-radius: 3px;
+    }
+
+    .msg.assistant {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--text);
+      align-self: flex-start;
+    }
+
+    .msg.user {
+      background: var(--accent);
+      color: #0a0a0a;
+      font-weight: 500;
+      align-self: flex-end;
+    }
+
+    .msg.thinking {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      align-self: flex-start;
+      font-style: italic;
+    }
+
+    .typing-dots span {
+      display: inline-block;
+      animation: blink 1.2s infinite;
+      opacity: 0.4;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes blink {
+      0%, 100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    .chat-input-row {
+      display: flex;
+      border-top: 1px solid var(--border);
+      background: var(--surface);
+    }
+
+    #chat-input {
+      flex: 1;
+      background: transparent;
+      border: none;
+      outline: none;
+      padding: 0.9rem 1rem;
+      color: var(--text);
+      font-family: var(--font-body);
+      font-size: 0.875rem;
+      resize: none;
+    }
+
+    #chat-input::placeholder { color: var(--muted); }
+
+    #chat-send {
+      background: none;
+      border: none;
+      border-left: 1px solid var(--border);
+      padding: 0 1rem;
+      cursor: pointer;
+      color: var(--accent);
+      font-size: 1.1rem;
+      transition: opacity 0.2s;
+    }
+
+    #chat-send:hover { opacity: 0.75; }
+
+    #chat-send:disabled { opacity: 0.3; cursor: default; }
   </style>
 </head>
 <body>
@@ -552,18 +674,18 @@
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- CONTACT (fixed layout) -->
 <section class="contact" id="contact">
-  <div>
+  <div class="contact-left">
     <div class="section-label">Contact</div>
     <h2>Let's talk about your business.</h2>
     <p>Tell me what problem you're trying to solve and I'll get back to you within 24 hours.</p>
   </div>
-  <div class="contact-item">
-    <span class="contact-item-label">Founder</span>
-    <span class="contact-item-value">Ethan Ng</span>
-  </div>
-  <div class="contact-item">
+  <div class="contact-right">
+    <div class="contact-item">
+      <span class="contact-item-label">Founder</span>
+      <span class="contact-item-value">Ethan Ng</span>
+    </div>
     <div class="contact-item">
       <span class="contact-item-label">Phone / WhatsApp</span>
       <span class="contact-item-value"><a href="tel:+6591288942">+65 9128 8942</a></span>
@@ -624,12 +746,149 @@
   <a href="#privacy">Privacy Policy</a>
 </footer>
 
-<!-- Dante AI Embed -->
-<script src="https://agents.dante-ai.com/embed.js"
-        data-agent-id="22d35ce4-305f-4cdb-b0aa-d93335cd0f66"
-        data-widget-key="wk_QvBv1y0scmcr1dXW-uQoVC68vo_6PR9L"
-        crossorigin="anonymous"
-        async></script>
+<!-- ── CUSTOM AI CHATBOT ── -->
+<div id="chat-bubble">
+  <div id="chat-window">
+    <div class="chat-header">
+      <div class="chat-header-info">
+        <span class="chat-header-name">Ethan's AI Assistant</span>
+        <span class="chat-header-status">● Online</span>
+      </div>
+      <button id="chat-close" aria-label="Close chat">✕</button>
+    </div>
+    <div id="chat-messages"></div>
+    <div class="chat-input-row">
+      <textarea id="chat-input" rows="1" placeholder="Ask me anything…"></textarea>
+      <button id="chat-send" aria-label="Send">↑</button>
+    </div>
+  </div>
+
+  <button id="chat-toggle" aria-label="Open chat">
+    <!-- Chat icon -->
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>
+    </svg>
+  </button>
+</div>
+
+<script>
+  const SYSTEM_PROMPT = `You are the AI assistant on Ethan Ng's business website (intraftech.xyz). Ethan is a Singapore-based founder who builds AI-powered automation for small businesses.
+
+His four services are:
+1. AI WhatsApp Chatbots — automate client intake, FAQs, routing
+2. Workflow Automation — identify and eliminate operational bottlenecks
+3. Website AI Assistants — intelligent chat embedded on websites
+4. Managed AI Infrastructure — build, host, maintain AI systems
+
+Your job is to qualify visitors and warm them up for a discovery call. Follow this flow:
+- Greet warmly but briefly. Ask what kind of business they run.
+- Once you know their business, ask what task or problem is eating their time most.
+- Map their pain to one of Ethan's four services and explain it simply in 1–2 sentences.
+- Always end by inviting them to book a free 30-minute discovery call: https://cal.com/ethanng (no commitment needed).
+- If they ask about pricing, say it depends on their needs and Ethan will go through it on the call.
+- Keep responses short and conversational — under 80 words unless they ask something detailed.
+- Never try to close a deal yourself. Your only goal is to get them curious and onto the calendar.
+- If they seem hesitant, offer to take their email so Ethan can follow up personally instead.`;
+
+  const messagesEl = document.getElementById('chat-messages');
+  const inputEl = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send');
+  const toggleBtn = document.getElementById('chat-toggle');
+  const closeBtn = document.getElementById('chat-close');
+  const windowEl = document.getElementById('chat-window');
+
+  let history = [];
+  let isOpen = false;
+  let hasGreeted = false;
+
+  function appendMsg(role, text) {
+    const div = document.createElement('div');
+    div.className = `msg ${role}`;
+    div.textContent = text;
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return div;
+  }
+
+  function showTyping() {
+    const div = document.createElement('div');
+    div.className = 'msg thinking';
+    div.innerHTML = '<span class="typing-dots"><span>●</span><span>●</span><span>●</span></span>';
+    messagesEl.appendChild(div);
+    messagesEl.scrollTop = messagesEl.scrollHeight;
+    return div;
+  }
+
+  async function sendMessage(userText) {
+    if (!userText.trim()) return;
+
+    sendBtn.disabled = true;
+    inputEl.value = '';
+
+    appendMsg('user', userText);
+    history.push({ role: 'user', content: userText });
+
+    const typingEl = showTyping();
+
+    try {
+      const response = await fetch('https://api.anthropic.com/v1/messages', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          model: 'claude-sonnet-4-20250514',
+          max_tokens: 1000,
+          system: SYSTEM_PROMPT,
+          messages: history
+        })
+      });
+
+      const data = await response.json();
+      const reply = data.content?.[0]?.text || "Sorry, I couldn't get a response. Please try again.";
+
+      typingEl.remove();
+      appendMsg('assistant', reply);
+      history.push({ role: 'assistant', content: reply });
+    } catch (err) {
+      typingEl.remove();
+      appendMsg('assistant', "Something went wrong on my end. Try refreshing, or reach out directly at e.ng.law@outlook.com.");
+    }
+
+    sendBtn.disabled = false;
+    inputEl.focus();
+  }
+
+  function greet() {
+    if (!hasGreeted) {
+      hasGreeted = true;
+      const greeting = "Hey! 👋 I'm Ethan's AI assistant. What kind of business do you run?";
+      appendMsg('assistant', greeting);
+      history.push({ role: 'assistant', content: greeting });
+    }
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    isOpen = !isOpen;
+    windowEl.classList.toggle('open', isOpen);
+    if (isOpen) {
+      greet();
+      inputEl.focus();
+    }
+  });
+
+  closeBtn.addEventListener('click', () => {
+    isOpen = false;
+    windowEl.classList.remove('open');
+  });
+
+  sendBtn.addEventListener('click', () => sendMessage(inputEl.value));
+
+  inputEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage(inputEl.value);
+    }
+  });
+</script>
 
 </body>
 </html>
