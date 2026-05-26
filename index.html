@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>Ethan Ng — AI Systems for Small Businesses</title>
 <meta name="description" content="Ethan Ng builds AI-powered automation for small businesses. WhatsApp chatbots, workflow automation, and managed AI infrastructure. Singapore-based."/>
+<!-- Favicons -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="favicon.svg">
+<meta name="theme-color" content="#f4efe6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,300..900,0..100&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -209,12 +213,66 @@
     font-weight: 400;
   }
   .deck-body p {
-    color: var(--ink-soft);
-    font-size: 1.02rem;
+    color: var(--ink);
+    font-size: clamp(1.05rem, 1.4vw, 1.3rem);
     line-height: 1.7;
     margin-bottom: 1.25rem;
     max-width: 42ch;
+    font-weight: 400;
   }
+
+  /* ── TABLE OF CONTENTS (floating sidebar) ── */
+  .toc {
+    position: fixed;
+    right: 2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 90;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+  .toc.visible { opacity: 1; }
+  .toc-item {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    cursor: none;
+    text-decoration: none;
+    color: var(--ink-mute);
+    font-family: var(--mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    justify-content: flex-end;
+  }
+  .toc-item:hover, .toc-item.active { color: var(--accent); }
+  .toc-label {
+    opacity: 0;
+    transform: translateX(6px);
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+    pointer-events: none;
+  }
+  .toc:hover .toc-label,
+  .toc-item.active .toc-label { opacity: 1; transform: translateX(0); }
+  .toc-dot {
+    width: 5px; height: 5px;
+    border-radius: 50%;
+    border: 1px solid currentColor;
+    flex-shrink: 0;
+    transition: background 0.2s, width 0.2s, height 0.2s;
+  }
+  .toc-item.active .toc-dot,
+  .toc-item:hover .toc-dot {
+    background: var(--accent);
+    border-color: var(--accent);
+    width: 7px; height: 7px;
+  }
+  @media (max-width: 1100px) { .toc { display: none; } }
   .deck-cta {
     display: inline-flex;
     align-items: center;
@@ -1112,6 +1170,18 @@
 <div class="cursor-dot"></div>
 <div class="cursor-ring"></div>
 
+<!-- TABLE OF CONTENTS -->
+<nav class="toc" id="toc" aria-label="Page sections">
+  <a href="#home"     class="toc-item" data-section="home">    <span class="toc-label">Home</span>    <span class="toc-dot"></span></a>
+  <a href="#services" class="toc-item" data-section="services"><span class="toc-label">Services</span> <span class="toc-dot"></span></a>
+  <a href="#process"  class="toc-item" data-section="process"> <span class="toc-label">Process</span>  <span class="toc-dot"></span></a>
+  <a href="#work"     class="toc-item" data-section="work">    <span class="toc-label">Work</span>     <span class="toc-dot"></span></a>
+  <a href="#pricing"  class="toc-item" data-section="pricing"> <span class="toc-label">Pricing</span>  <span class="toc-dot"></span></a>
+  <a href="#faq"      class="toc-item" data-section="faq">     <span class="toc-label">FAQ</span>      <span class="toc-dot"></span></a>
+  <a href="#book"     class="toc-item" data-section="book">    <span class="toc-label">Book</span>     <span class="toc-dot"></span></a>
+  <a href="#contact"  class="toc-item" data-section="contact"> <span class="toc-label">Contact</span>  <span class="toc-dot"></span></a>
+</nav>
+
 <!-- NAV -->
 <nav>
   <a href="#" class="brand">Ethan <em>Ng</em></a>
@@ -1142,13 +1212,13 @@
     </p>
     <div class="deck-body">
       <p>
-        Most small businesses lose hours every week to client follow-ups, intake forms, and FAQ-style questions that don't need a human. I build the systems that handle them — quietly, reliably, in any language.
+        I build AI systems that run the slow parts of your business for you — WhatsApp bots that handle client enquiries around the clock, workflow automation that removes manual busywork, and website assistants that convert visitors into bookings.
       </p>
       <p>
-        No technical knowledge required on your side. I handle the build, the hosting, and the upkeep.
+        No technical knowledge needed on your side. I scope it, build it, host it, and keep it running.
       </p>
       <a href="#book" class="deck-cta">
-        Book a discovery call
+        Book a free discovery call
         <span class="arrow">↗</span>
       </a>
     </div>
@@ -1599,7 +1669,39 @@
     });
   });
 
-  // ── CHAT ──
+  // ── TABLE OF CONTENTS ──
+  const toc = document.getElementById('toc');
+  const tocItems = document.querySelectorAll('.toc-item');
+  const sections = ['home','services','process','work','pricing','faq','book','contact','privacy'];
+
+  // Show TOC after scrolling past the hero
+  const showTocAfter = document.querySelector('.masthead');
+  const tocObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      toc.classList.toggle('visible', !e.isIntersecting);
+    });
+  }, { threshold: 0.2 });
+  tocObserver.observe(showTocAfter);
+
+  // Highlight active section
+  const sectionEls = sections.map(id => document.getElementById(id)).filter(Boolean);
+  const activeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        tocItems.forEach(item => {
+          item.classList.toggle('active', item.dataset.section === e.target.id);
+        });
+      }
+    });
+  }, { rootMargin: '-30% 0px -60% 0px' });
+  sectionEls.forEach(el => activeObserver.observe(el));
+
+  // Cursor hover on toc items
+  tocItems.forEach(el => {
+    el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+    el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+  });
+
   const SYSTEM_PROMPT = `You are the AI assistant on Ethan Ng's business website (intraftech.xyz). Ethan is a Singapore-based founder who builds AI-powered automation for small businesses.
 
 His four services are:
