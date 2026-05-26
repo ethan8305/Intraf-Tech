@@ -4,28 +4,13 @@ const cors = require('cors');
 const app = express();
 app.use(express.json());
 
-// Allow requests from your live site only
-const allowedOrigins = [
-  'https://intraftech.xyz',
-  'https://www.intraftech.xyz',
-  'http://localhost'  // for local testing
-];
+// Open CORS — accepts requests from any origin
+app.use(cors());
 
-app.use(cors({
-  origin: (origin, callback) => {
-    // Allow requests with no origin (e.g. curl) or matching origins
-    if (!origin || allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  }
-}));
-
-// Health check — Railway uses this to confirm the service is up
+// Health check
 app.get('/', (req, res) => res.json({ status: 'ok' }));
 
-// Proxy endpoint — your frontend POSTs here instead of directly to Anthropic
+// Proxy endpoint
 app.post('/chat', async (req, res) => {
   const apiKey = process.env.ANTHROPIC_API_KEY;
 
