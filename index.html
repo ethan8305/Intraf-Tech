@@ -1755,15 +1755,9 @@ Your job is to qualify visitors and warm them up for a discovery call. Follow th
     history.push({ role: 'user', content: userText });
     const typingEl = showTyping();
     try {
-      // Points to your Railway proxy — swap in your real URL after deploying
-      const response = await fetch('https://api.anthropic.com/v1/messages', {
+      const response = await fetch('https://intraf-tech-production.up.railway.app/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'x-api-key': 'YOUR_API_KEY_HERE',
-          'anthropic-version': '2023-06-01',
-          'anthropic-dangerous-direct-browser-access': 'true'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           model: 'claude-sonnet-4-20250514',
           max_tokens: 1000,
