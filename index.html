@@ -40,8 +40,8 @@
 <meta name="entity-type" content="Person; ProfessionalService; LocalBusiness"/>
 <meta name="service-area" content="Singapore"/>
 <!-- Favicons -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe6'/%3E%3Crect x='0' y='0' width='32' height='2' fill='%23d94a1f'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Georgia%2C Times New Roman%2C serif' font-style='italic' font-size='20' font-weight='400' fill='%231a1612'%3EE%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe6'/%3E%3Crect x='0' y='0' width='32' height='2' fill='%23d94a1f'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-family='Georgia%2C Times New Roman%2C serif' font-style='italic' font-size='20' font-weight='400' fill='%231a1612'%3EE%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe6' stroke='%231a1612' stroke-width='1'/%3E%3Crect x='0' y='0' width='32' height='3' fill='%23d94a1f'/%3E%3Ctext x='16' y='24' text-anchor='middle' font-family='Georgia%2C Times New Roman%2C serif' font-style='italic' font-size='22' font-weight='400' fill='%231a1612'%3EE%3C/text%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe6' stroke='%231a1612' stroke-width='1'/%3E%3Crect x='0' y='0' width='32' height='3' fill='%23d94a1f'/%3E%3Ctext x='16' y='24' text-anchor='middle' font-family='Georgia%2C Times New Roman%2C serif' font-style='italic' font-size='22' font-weight='400' fill='%231a1612'%3EE%3C/text%3E%3C/svg%3E">
 <meta name="theme-color" content="#f4efe6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -216,6 +216,19 @@
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+  /* Visually hidden but available to assistive tech and crawlers */
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+
   :root {
     --paper: #f4efe6;
     --paper-deep: #ebe4d6;
@@ -367,7 +380,7 @@
 
   .masthead-meta {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-start;
     align-items: baseline;
     padding-bottom: 2.5rem;
     border-bottom: 1px solid var(--rule);
@@ -381,6 +394,66 @@
   .masthead-meta .vol {
     color: var(--accent);
     font-weight: 500;
+  }
+
+  /* Masthead dropdown (collapses editorial meta into a click-to-reveal) */
+  .masthead-dropdown { position: relative; }
+  .masthead-dropdown summary {
+    list-style: none;
+    cursor: none;
+    display: inline-flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    outline: none;
+    color: var(--ink-mute);
+    transition: color 0.25s;
+  }
+  .masthead-dropdown summary:hover { color: var(--ink); }
+  .masthead-dropdown summary::-webkit-details-marker,
+  .masthead-dropdown summary::marker { display: none; content: ''; }
+  .masthead-dropdown .vol { transition: color 0.25s; }
+  .masthead-dropdown .chev {
+    display: inline-block;
+    width: 7px; height: 7px;
+    border-right: 1.2px solid var(--accent);
+    border-bottom: 1.2px solid var(--accent);
+    transform: rotate(45deg) translate(-1.5px, -1.5px);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+    align-self: center;
+  }
+  .masthead-dropdown[open] .chev {
+    transform: rotate(-135deg) translate(-1.5px, -1.5px);
+  }
+  .masthead-dropdown-body {
+    position: absolute;
+    top: calc(100% + 0.85rem);
+    left: 0;
+    min-width: 260px;
+    background: var(--paper);
+    border: 1px solid var(--ink);
+    padding: 0.95rem 1.15rem;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    box-shadow: 0 16px 32px rgba(26, 22, 18, 0.12);
+    z-index: 50;
+    display: grid;
+    gap: 0.45rem;
+    animation: mastheadDropFade 0.25s ease;
+  }
+  .masthead-dropdown-body em {
+    font-family: var(--serif-italic);
+    font-style: italic;
+    color: var(--accent);
+    text-transform: none;
+    letter-spacing: 0;
+    font-size: 0.95rem;
+  }
+  @keyframes mastheadDropFade {
+    from { opacity: 0; transform: translateY(-6px); }
+    to   { opacity: 1; transform: translateY(0); }
   }
 
   .headline {
@@ -462,16 +535,6 @@
     color: var(--ink);
     border-bottom-color: var(--accent);
   }
-  .nav-contents .section-marker {
-    font-family: var(--serif-italic);
-    font-style: italic;
-    color: var(--accent);
-    font-size: 1rem;
-    line-height: 1;
-    text-transform: none;
-    letter-spacing: 0;
-    transform: translateY(2px);
-  }
   .nav-contents .section-name {
     font-family: var(--serif-italic);
     font-style: italic;
@@ -540,13 +603,13 @@
     justify-content: space-between;
     align-items: baseline;
   }
-  .nav-contents-head em {
+  .nav-contents-count {
     font-family: var(--serif-italic);
     font-style: italic;
     text-transform: none;
     letter-spacing: 0;
     color: var(--accent);
-    font-size: 1.1rem;
+    font-size: 0.95rem;
   }
   .nav-contents-list {
     list-style: none;
@@ -670,13 +733,6 @@
     text-transform: uppercase;
     color: var(--accent);
     margin-bottom: 3.5rem;
-  }
-  .rubric::before {
-    content: '§';
-    font-family: var(--serif);
-    font-style: italic;
-    font-size: 1.5rem;
-    color: var(--accent);
   }
   .rubric::after {
     content: '';
@@ -1839,18 +1895,6 @@
     position: relative;
     overflow: hidden;
   }
-  .colophon::before {
-    content: '§';
-    position: absolute;
-    top: -2rem; right: 3vw;
-    font-family: var(--serif-italic);
-    color: var(--accent);
-    font-size: 22rem;
-    opacity: 0.06;
-    line-height: 1;
-    pointer-events: none;
-    transition: transform 0.6s ease-out;
-  }
   .colophon-grid {
     display: grid;
     grid-template-columns: 1fr 1.6fr;
@@ -1930,10 +1974,6 @@
     .colophon-signature { grid-template-columns: 1fr; }
   }
 
-  /* ── NAV LIVE-CHIP (mobile collapse) ── */
-  @media (max-width: 600px) {
-    .nav-live { display: none; }
-  }
 </style>
 </head>
 <body>
@@ -1957,14 +1997,13 @@
     </a>
     <div class="nav-contents-wrap">
       <button class="nav-contents" id="navContents" type="button" aria-expanded="false" aria-controls="navContentsPanel" aria-label="Open page contents">
-        <span class="section-marker" aria-hidden="true">§</span>
         <span class="section-name" id="navContentsCurrent">Masthead</span>
         <span class="chevron" aria-hidden="true"></span>
       </button>
       <div class="nav-contents-panel" id="navContentsPanel" role="menu" aria-label="Page sections">
         <div class="nav-contents-head">
           <span>Index</span>
-          <em>§</em>
+          <span class="nav-contents-count" id="navContentsCount">i / ix</span>
         </div>
         <ol class="nav-contents-list">
           <li data-section="home"><a href="#home" role="menuitem"><span class="n">i.</span><span>Masthead</span><span class="dot" aria-hidden="true"></span></a></li>
@@ -1986,7 +2025,6 @@
     </div>
   </div>
   <ul>
-    <li class="nav-live"><span class="live-chip"><span class="live-dot"></span>Accepting clients</span></li>
     <li><a href="#services">Services</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="#pricing">Pricing</a></li>
@@ -2000,21 +2038,30 @@
   <!-- Decorative parallax glyphs -->
   <div class="hero-parallax" aria-hidden="true" id="heroParallax">
     <span class="glyph one">&amp;</span>
-    <span class="glyph two">§</span>
   </div>
 
   <div class="masthead-meta">
-    <span class="vol">Vol. I &nbsp;·&nbsp; Issue 01</span>
-    <span class="live-chip"><span class="live-dot"></span>Singapore · <span id="liveTime">live</span></span>
-    <span>An AI Studio for Small Business</span>
+    <details class="masthead-dropdown">
+      <summary aria-label="Open masthead details">
+        <span class="vol">Vol. I &nbsp;·&nbsp; Issue 01</span>
+        <span class="chev" aria-hidden="true"></span>
+      </summary>
+      <div class="masthead-dropdown-body">
+        <span><em>An AI Studio</em> for Small Business</span>
+        <span>Singapore · Independent Practice</span>
+        <span>Published 2026 — Ongoing</span>
+      </div>
+    </details>
   </div>
 
-  <h1 class="headline" id="heroHeadline" data-text="Systems that work while you sleep.">
+  <h1 class="sr-only">WhatsApp Chatbots, Website Design &amp; AI Automation for Singapore Small Businesses</h1>
+
+  <div class="headline" id="heroHeadline" role="presentation" data-text="Systems that work while you sleep." aria-hidden="true">
     <span class="word"><span>Systems</span></span><br/>
     <span class="word"><span>that</span></span> <span class="word"><span><em>work</em></span></span><br/>
     <span class="word"><span>while</span></span> <span class="word"><span>you</span></span><br/>
     <span class="word"><span>sleep.</span></span>
-  </h1>
+  </div>
 
   <div class="deck">
     <p class="deck-lead">
@@ -2564,9 +2611,14 @@
   const navContents = document.getElementById('navContents');
   const navContentsPanel = document.getElementById('navContentsPanel');
   const navContentsCurrent = document.getElementById('navContentsCurrent');
+  const navContentsCount = document.getElementById('navContentsCount');
   const navContentsItems = navContentsPanel.querySelectorAll('li[data-section]');
   const navContentsProgressFill = document.getElementById('navContentsProgressFill');
   const navContentsProgressPct = document.getElementById('navContentsProgressPct');
+  const sectionRomans = {
+    home: 'i', services: 'ii', process: 'iii', work: 'iv',
+    pricing: 'v', faq: 'vi', book: 'vii', contact: 'viii', colophon: 'ix'
+  };
 
   function setNavContentsOpen(open) {
     navContents.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -2604,6 +2656,9 @@
         if (navContentsCurrent && sectionLabels[id] && id !== 'privacy') {
           navContentsCurrent.textContent = sectionLabels[id];
         }
+        if (navContentsCount && sectionRomans[id]) {
+          navContentsCount.textContent = `${sectionRomans[id]} / ix`;
+        }
       }
     });
   }, { rootMargin: '-30% 0px -60% 0px' });
@@ -2620,34 +2675,7 @@
   document.addEventListener('scroll', updateNavContentsProgress, { passive: true });
   updateNavContentsProgress();
 
-  const SYSTEM_PROMPT = `You are the AI assistant on Ethan Ng's business website (intraftech.xyz). Ethan is a Singapore-based founder who builds AI-powered automation for small businesses.
-
-# Your single goal
-Get the visitor to book a free 30-minute consultation: https://cal.com/ethan8305
-
-Every response should move them closer to booking. You are not here to triage, qualify, or collect detailed information — that's what the consultation is for. If they're curious, answer briefly, then point them to the call.
-
-# What Ethan offers
-1. AI WhatsApp Chatbots — instant client intake, FAQ handling, routing in any language, 24/7
-2. Websites — modern, fast, mobile-ready websites for small businesses, optimised for SEO and conversion; optional embedded AI assistants
-3. Workflow Automation — finds operational bottlenecks and automates them
-4. Website AI Assistants — like me, embedded on client sites, trained on their content
-5. Managed AI Infrastructure — Ethan builds, hosts, and maintains everything
-
-Most clients are live within two weeks. No technical knowledge required from the client.
-
-# How to respond
-- Keep responses SHORT — 2 to 4 sentences usually. Never lecture.
-- When they ask about a service, give a one-sentence explanation, then say something like "The best way to figure out if this fits your business is a quick call — want me to send the link?"
-- When they ask about pricing, say it's quoted per project based on scope, and Ethan walks through it on the call. Don't quote numbers.
-- When they ask about timelines or technical details, give a brief honest answer, then redirect to booking.
-- If they seem hesitant about a call, offer to take their email so Ethan can reach out personally instead.
-- Never say "let me ask you some questions first" — that's what the consultation is for.
-- Always include the booking link when suggesting they book: https://cal.com/ethan8305
-
-# Style
-Conversational and warm, but always with intent. You're not a tour guide — you're someone who knows the answer is "talk to Ethan" and gently steers there every time.`;
-
+  // System prompt lives server-side (Railway endpoint) — never shipped to the client.
   const messagesEl = document.getElementById('chat-messages');
   const inputEl = document.getElementById('chat-input');
   const sendBtn = document.getElementById('chat-send');
@@ -2731,9 +2759,8 @@ Conversational and warm, but always with intent. You're not a tour guide — you
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'claude-haiku-4-5-20251001',
-          max_tokens: 1000,
-          system: SYSTEM_PROMPT,
+          // Model + system prompt are decided server-side now.
+          // Client only ships the conversation history.
           messages: history
         })
       });
@@ -2850,19 +2877,25 @@ Conversational and warm, but always with intent. You're not a tour guide — you
     tickerTrack.insertAdjacentHTML('beforeend', tickerTrack.innerHTML);
   }
 
-  /* ── 6. Live time chip (refreshes every minute) ── */
-  const liveTime = document.getElementById('liveTime');
-  function updateLiveTime() {
-    if (!liveTime) return;
-    const now = new Date();
-    // Singapore Standard Time (UTC+8)
-    const sgt = new Date(now.toLocaleString('en-US', { timeZone: 'Asia/Singapore' }));
-    const hh = String(sgt.getHours()).padStart(2, '0');
-    const mm = String(sgt.getMinutes()).padStart(2, '0');
-    liveTime.textContent = `${hh}:${mm} SGT`;
+  /* ── 6. Masthead dropdown — close on outside click / Esc ── */
+  const mastheadDropdown = document.querySelector('.masthead-dropdown');
+  if (mastheadDropdown) {
+    document.addEventListener('click', (e) => {
+      if (mastheadDropdown.open && !mastheadDropdown.contains(e.target)) {
+        mastheadDropdown.open = false;
+      }
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && mastheadDropdown.open) {
+        mastheadDropdown.open = false;
+      }
+    });
+    const mastheadSummary = mastheadDropdown.querySelector('summary');
+    if (mastheadSummary) {
+      mastheadSummary.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+      mastheadSummary.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+    }
   }
-  updateLiveTime();
-  setInterval(updateLiveTime, 30 * 1000);
 
   /* ── 7. Kinetic word rotator ── */
   const rotator = document.getElementById('kineticRotator');
