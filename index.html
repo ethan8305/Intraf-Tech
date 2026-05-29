@@ -196,7 +196,10 @@
     --mono: 'JetBrains Mono', ui-monospace, monospace;
   }
 
-  html { scroll-behavior: smooth; }
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;   /* keep anchor targets clear of the fixed nav */
+  }
 
   body {
     background: var(--paper);
@@ -1292,6 +1295,49 @@
     font-family: var(--serif-italic);
     color: var(--ink-mute);
   }
+  .msg a.msg-link {
+    color: var(--accent);
+    border-bottom: 1px solid var(--accent);
+    transition: background 0.18s, color 0.18s;
+    word-break: break-word;
+  }
+  .msg a.msg-link:hover {
+    background: var(--accent);
+    color: var(--paper);
+  }
+  /* Promoted booking link — rendered as a chat-inline CTA */
+  .msg a.msg-link-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.55rem;
+    padding: 0.6rem 0.9rem;
+    background: var(--ink);
+    color: var(--paper);
+    border: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    border-radius: 2px;
+    transition: background 0.2s ease, color 0.2s ease, transform 0.2s ease;
+    text-decoration: none;
+  }
+  .msg a.msg-link-cta:hover {
+    background: var(--accent);
+    color: var(--paper);
+    border-color: var(--accent);
+    transform: translateY(-1px);
+  }
+  .msg.user a.msg-link {
+    color: var(--paper);
+    border-color: rgba(244, 239, 230, 0.6);
+  }
+  .msg.user a.msg-link:hover {
+    background: var(--paper);
+    color: var(--ink);
+  }
   .typing-dots span {
     display: inline-block;
     animation: blink 1.2s infinite;
@@ -2355,10 +2401,54 @@ Conversational and warm, but always with intent. You're not a tour guide — you
   let isOpen = false;
   let hasGreeted = false;
 
+  // Escape HTML, then turn URLs + markdown links into real <a> tags.
+  // The cal.com booking link is promoted to a styled CTA button.
+  function escapeHtml(s) {
+    return s.replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+  function isBookingUrl(u) { return /cal\.com\/ethan/i.test(u); }
+  function makeLink(href, label) {
+    const booking = isBookingUrl(href);
+    const cls = booking ? 'msg-link msg-link-cta' : 'msg-link';
+    const text = booking ? (label && label !== href ? label : 'Book a 30-min call') : (label || href);
+    const arrow = booking ? ' ↗' : '';
+    return `<a href="${href}" target="_blank" rel="noopener noreferrer" class="${cls}">${escapeHtml(text)}${arrow}</a>`;
+  }
+  function linkify(text) {
+    // 1. Pull markdown-style links out first: [label](url)
+    //    Use a placeholder so the bare-URL pass doesn't double-link them.
+    const slots = [];
+    let s = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, label, url) => {
+      slots.push(makeLink(url, label));
+      return ` ${slots.length - 1} `;
+    });
+    // 2. Escape remaining HTML
+    s = escapeHtml(s);
+    // 3. Bare URLs
+    s = s.replace(/https?:\/\/[^\s<]+/g, (url) => {
+      // Trim trailing punctuation that's clearly not part of the URL
+      const trail = url.match(/[.,;:!?)\]]+$/);
+      let clean = url, tail = '';
+      if (trail) { clean = url.slice(0, -trail[0].length); tail = trail[0]; }
+      return makeLink(clean) + tail;
+    });
+    // 4. Restore markdown-link slots
+    s = s.replace(/ (\d+) /g, (_, i) => slots[+i]);
+    // 5. Preserve paragraph breaks
+    s = s.replace(/\n/g, '<br>');
+    return s;
+  }
+
   function appendMsg(role, text) {
     const div = document.createElement('div');
     div.className = `msg ${role}`;
-    div.textContent = text;
+    if (role === 'assistant') {
+      div.innerHTML = linkify(text);
+    } else {
+      div.textContent = text;
+    }
     messagesEl.appendChild(div);
     messagesEl.scrollTop = messagesEl.scrollHeight;
     return div;
@@ -2548,32 +2638,10 @@ Conversational and warm, but always with intent. You're not a tour guide — you
   }, { threshold: 0.2 });
   document.querySelectorAll('.ornament, .case-img[data-draw]').forEach(el => inViewObserver.observe(el));
 
-  /* ── 9. Smooth-scroll with custom easing for in-page hash links ── */
-  function easeInOutCubic(t) { return t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3) / 2; }
-  function scrollTo(target, duration = 900) {
-    const startY = window.scrollY;
-    const targetY = target.getBoundingClientRect().top + window.scrollY - 20;
-    const dist = targetY - startY;
-    let startTime = null;
-    function step(now) {
-      if (!startTime) startTime = now;
-      const t = Math.min((now - startTime) / duration, 1);
-      window.scrollTo(0, startY + dist * easeInOutCubic(t));
-      if (t < 1) requestAnimationFrame(step);
-    }
-    requestAnimationFrame(step);
-  }
-  document.querySelectorAll('a[href^="#"]').forEach(a => {
-    a.addEventListener('click', (e) => {
-      const id = a.getAttribute('href').slice(1);
-      if (!id) return;
-      const target = document.getElementById(id);
-      if (!target) return;
-      e.preventDefault();
-      if (motionOK) scrollTo(target); else target.scrollIntoView();
-      history.replaceState(null, '', '#' + id);
-    });
-  });
+  /* ── 9. Anchor navigation ──
+     Native <a href="#section"> + CSS `scroll-behavior: smooth` + `scroll-padding-top`
+     handles every in-page link cleanly. The previous JS hijack was suppressing the
+     default action; removed so every button on the page navigates again. */
 
   /* ── 10. Text scramble effect on brand on hover ── */
   class TextScramble {
