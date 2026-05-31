@@ -10,6 +10,7 @@
 <meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1"/>
 <meta name="googlebot" content="index, follow"/>
 <link rel="canonical" href="https://intraftech.xyz/"/>
+<link rel="sitemap" type="application/xml" href="https://intraftech.xyz/sitemap.xml"/>
 <!-- Geo targeting -->
 <meta name="geo.region" content="SG"/>
 <meta name="geo.placename" content="Singapore"/>
@@ -22,10 +23,11 @@
 <meta property="og:description" content="Singapore-based AI specialist building WhatsApp chatbots, modern websites, and workflow automation for SMEs, law firms, and accounting practices. Live in two weeks."/>
 <meta property="og:url" content="https://intraftech.xyz/"/>
 <meta property="og:locale" content="en_SG"/>
-<!-- Social card image reuses the embedded favicon, so no extra file is required.
-     Most platforms prefer JPG/PNG; if you ever host a real 1200x630, swap the data URI for the URL. -->
-<meta property="og:image" content="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%23f4efe6'/%3E%3Crect x='0' y='0' width='1200' height='14' fill='%23d94a1f'/%3E%3Ctext x='100' y='340' font-family='Georgia%2C Times New Roman%2C serif' font-size='150' font-weight='300' fill='%231a1612'%3EEthan %3Ctspan font-style='italic' fill='%23d94a1f'%3ENg%3C/tspan%3E%3C/text%3E%3Ctext x='100' y='430' font-family='Georgia%2C Times New Roman%2C serif' font-style='italic' font-size='48' fill='%236b6258'%3EAI systems for small business.%3C/text%3E%3Ctext x='100' y='560' font-family='monospace' font-size='28' fill='%239c9387' letter-spacing='4'%3ESINGAPORE %E2%80%94 NG ZHEN YANG, ETHAN%3C/text%3E%3C/svg%3E"/>
-<meta property="og:image:type" content="image/svg+xml"/>
+<!-- Static 1200x630 PNG so LinkedIn / WhatsApp / X render a real preview card.
+     (SVG data-URIs are not supported by most social scrapers.) -->
+<meta property="og:image" content="https://intraftech.xyz/og-image.png"/>
+<meta property="og:image:type" content="image/png"/>
+<meta property="og:image:secure_url" content="https://intraftech.xyz/og-image.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
 <meta property="og:image:alt" content="Ethan Ng — AI Systems for Small Business"/>
@@ -33,15 +35,17 @@
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="WhatsApp Chatbots & Website Design Singapore — Ethan Ng"/>
 <meta name="twitter:description" content="Singapore-based AI specialist. WhatsApp chatbots, modern websites, workflow automation for SMEs. Live in two weeks."/>
-<meta name="twitter:image" content="data:image/svg+xml;utf8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 630'%3E%3Crect width='1200' height='630' fill='%23f4efe6'/%3E%3Crect x='0' y='0' width='1200' height='14' fill='%23d94a1f'/%3E%3Ctext x='100' y='340' font-family='Georgia%2C Times New Roman%2C serif' font-size='150' font-weight='300' fill='%231a1612'%3EEthan %3Ctspan font-style='italic' fill='%23d94a1f'%3ENg%3C/tspan%3E%3C/text%3E%3Ctext x='100' y='430' font-family='Georgia%2C Times New Roman%2C serif' font-style='italic' font-size='48' fill='%236b6258'%3EAI systems for small business.%3C/text%3E%3Ctext x='100' y='560' font-family='monospace' font-size='28' fill='%239c9387' letter-spacing='4'%3ESINGAPORE %E2%80%94 NG ZHEN YANG, ETHAN%3C/text%3E%3C/svg%3E"/>
+<meta name="twitter:image" content="https://intraftech.xyz/og-image.png"/>
+<meta name="twitter:image:alt" content="Ethan Ng — AI WhatsApp chatbots, websites & automation for Singapore small businesses"/>
 <!-- Generative-Engine signals (helps LLM-driven discovery surface accurate facts) -->
 <meta name="ai-content-declaration" content="Original content authored and owned by Ng Zhen Yang, Ethan. Republication and citation by AI search systems is permitted with attribution to intraftech.xyz."/>
 <meta name="entity" content="Ng Zhen Yang, Ethan"/>
 <meta name="entity-type" content="Person; ProfessionalService; LocalBusiness"/>
 <meta name="service-area" content="Singapore"/>
-<!-- Favicons -->
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe6' stroke='%231a1612' stroke-width='1'/%3E%3Crect x='0' y='0' width='32' height='3' fill='%23d94a1f'/%3E%3Ctext x='16' y='24' text-anchor='middle' font-family='Georgia%2C Times New Roman%2C serif' font-style='italic' font-size='22' font-weight='400' fill='%231a1612'%3EE%3C/text%3E%3C/svg%3E">
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' fill='%23f4efe6' stroke='%231a1612' stroke-width='1'/%3E%3Crect x='0' y='0' width='32' height='3' fill='%23d94a1f'/%3E%3Ctext x='16' y='24' text-anchor='middle' font-family='Georgia%2C Times New Roman%2C serif' font-style='italic' font-size='22' font-weight='400' fill='%231a1612'%3EE%3C/text%3E%3C/svg%3E">
+<!-- Favicons — the "special E" brand mark, generated once and reused everywhere -->
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#f4efe6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -489,14 +493,15 @@
     color: var(--ink);
     max-width: 22ch;
   }
-  .deck-lead::first-letter {
-    font-size: 3em;
+  /* Drop cap is the "special E" brand mark (same glyph as the favicon/nav),
+     floated as an SVG so it scales crisply and always matches the wordmark. */
+  .deck-dropcap {
     float: left;
-    line-height: 0.85;
-    padding: 0.12em 0.1em 0 0;
-    color: var(--accent);
-    font-family: var(--serif);
-    font-weight: 400;
+    width: 2.5em;
+    height: 2.5em;
+    margin: 0.08em 0.4em 0.05em 0;
+    shape-outside: margin-box;
+    flex-shrink: 0;
   }
   .deck-body p {
     color: var(--ink);
@@ -2065,7 +2070,7 @@
 
   <div class="deck">
     <p class="deck-lead">
-      Ethan Ng designs and deploys AI-powered automation for
+      <svg class="deck-dropcap" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false"><rect width="32" height="32" fill="#f4efe6" stroke="#1a1612" stroke-width="1"/><rect width="32" height="3" fill="#d94a1f"/><text x="16" y="24" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="22" font-weight="400" fill="#1a1612">E</text></svg><span class="sr-only">E</span>than Ng designs and deploys AI-powered automation for
       <span class="kinetic" id="kineticRotator" aria-live="polite">
         <span class="show">law firms</span>
         <span>accounting practices</span>
@@ -2779,7 +2784,7 @@
   function greet() {
     if (!hasGreeted) {
       hasGreeted = true;
-      const greeting = "Hi! I'm Ethan's assistant. He builds WhatsApp chatbots, modern websites, and AI automation for small businesses in Singapore. What brings you here today?";
+      const greeting = "Hi — I'm Ethan's assistant. Quick version: he builds AI systems that handle the slow parts of a business — WhatsApp intake, websites, automations. Got a specific problem in mind, or want to know if it's worth a quick chat with him?";
       appendMsg('assistant', greeting);
       history.push({ role: 'assistant', content: greeting });
     }
@@ -2902,7 +2907,17 @@
   if (rotator && motionOK) {
     const words = Array.from(rotator.children);
     let i = 0;
-    setInterval(() => {
+
+    // Force a single clean state: only word `i` is shown, everything else reset.
+    // Used on tab re-focus to undo any half-finished transition.
+    const snapTo = (idx) => {
+      words.forEach((w, k) => {
+        w.classList.toggle('show', k === idx);
+        w.classList.remove('out');
+      });
+    };
+
+    const advance = () => {
       const current = words[i];
       i = (i + 1) % words.length;
       const next = words[i];
@@ -2910,12 +2925,19 @@
       current.classList.add('out');
       next.classList.remove('out');
       // tiny tick to let transition register
-      requestAnimationFrame(() => {
-        next.classList.add('show');
-      });
+      requestAnimationFrame(() => next.classList.add('show'));
       // clean up the "out" class after the transition
       setTimeout(() => current.classList.remove('out'), 600);
-    }, 2600);
+    };
+
+    // Background tabs freeze requestAnimationFrame but keep firing timers, which
+    // used to queue up dozens of deferred "show" toggles that all fired on return
+    // (every word visible at once). Skip advancing while hidden, and snap to a
+    // clean single-word state the moment the tab regains focus.
+    setInterval(() => { if (!document.hidden) advance(); }, 2600);
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden) snapTo(i);
+    });
   }
 
   /* ── 8. Ornament & SVG draw-on-scroll (uses .in-view) ── */
