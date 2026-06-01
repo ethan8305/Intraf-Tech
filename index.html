@@ -2688,6 +2688,12 @@
   const closeBtn = document.getElementById('chat-close');
   const windowEl = document.getElementById('chat-window');
 
+  // Chat proxy endpoint. Swap this to your Cloudflare Worker URL after
+  // `wrangler deploy` (e.g. https://intraftech-chat.<you>.workers.dev) and
+  // you can shut the Railway service down. Kept as the Railway URL for now
+  // so the widget keeps working until you cut over.
+  const CHAT_ENDPOINT = 'https://intraf-tech-production.up.railway.app/chat';
+
   let history = [];
   let isOpen = false;
   let hasGreeted = false;
@@ -2760,7 +2766,7 @@
     history.push({ role: 'user', content: userText });
     const typingEl = showTyping();
     try {
-      const response = await fetch('https://intraf-tech-production.up.railway.app/chat', {
+      const response = await fetch(CHAT_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
