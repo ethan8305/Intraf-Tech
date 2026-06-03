@@ -701,6 +701,31 @@
     border-color: var(--accent);
     width: 7px; height: 7px;
   }
+  /* External LinkedIn entry — separated from the section index, glyph instead
+     of a roman numeral, an arrow instead of the progress dot. */
+  .nav-contents-ext { border-top: 1px solid var(--rule); }
+  .nav-contents-ext a .n {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-contents-ext a .n svg {
+    width: 0.9rem; height: 0.9rem;
+    fill: var(--ink-mute);
+    transition: fill 0.2s;
+  }
+  .nav-contents-ext a:hover .n svg { fill: var(--accent); }
+  .nav-contents-ext a .dot.ext {
+    width: auto; height: auto;
+    border: none;
+    border-radius: 0;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-mute);
+    transition: color 0.2s;
+  }
+  .nav-contents-ext a:hover { color: var(--accent); }
+  .nav-contents-ext a:hover .dot.ext { color: var(--accent); }
   .nav-contents-progress {
     margin-top: 1rem;
     padding-top: 0.85rem;
@@ -2056,6 +2081,7 @@
           <li data-section="book"><a href="#book" role="menuitem"><span class="n">vii.</span><span>Book</span><span class="dot" aria-hidden="true"></span></a></li>
           <li data-section="contact"><a href="#contact" role="menuitem"><span class="n">viii.</span><span>Contact</span><span class="dot" aria-hidden="true"></span></a></li>
           <li data-section="colophon"><a href="#colophon" role="menuitem"><span class="n">ix.</span><span>Colophon</span><span class="dot" aria-hidden="true"></span></a></li>
+          <li class="nav-contents-ext"><a href="https://www.linkedin.com/in/ethannzy" role="menuitem" target="_blank" rel="noopener"><span class="n" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></span><span>LinkedIn</span><span class="dot ext" aria-hidden="true">↗</span></a></li>
         </ol>
         <div class="nav-contents-progress">
           <span class="label">Read</span>
