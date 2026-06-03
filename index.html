@@ -353,7 +353,8 @@
 
   nav ul {
     display: flex;
-    gap: 2.25rem;
+    align-items: center;
+    gap: 1.5rem;
     list-style: none;
   }
   nav ul a {
@@ -376,6 +377,39 @@
   }
   nav ul a:hover { color: var(--ink); }
   nav ul a:hover::after { right: 0; }
+
+  /* LinkedIn icon link — sits inline with the mono text links but shows no
+     underline rule (it's an icon, not a word). Inherits colour so it matches. */
+  nav ul a.nav-icon {
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+  }
+  nav ul a.nav-icon::after { content: none; }
+  nav ul a.nav-icon svg {
+    width: 1.05rem;
+    height: 1.05rem;
+    display: block;
+    fill: currentColor;
+    transition: transform 0.2s ease;
+  }
+  nav ul a.nav-icon:hover svg { transform: translateY(-1px); }
+
+  /* Book is the conversion CTA — give it a bordered chip so it reads as an
+     action, distinct from the plain dropdown index entries. */
+  nav ul a.nav-cta {
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    padding: 0.4rem 0.85rem;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  nav ul a.nav-cta::after { content: none; }
+  nav ul a.nav-cta:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper);
+  }
 
   /* ── MASTHEAD (HERO) ── */
   .masthead {
@@ -2032,11 +2066,8 @@
     </div>
   </div>
   <ul>
-    <li><a href="#services">Services</a></li>
-    <li><a href="https://www.linkedin.com/in/ethannzy" target="_blank" rel="noopener">LinkedIn</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#book">Book</a></li>
+    <li><a href="https://www.linkedin.com/in/ethannzy" class="nav-icon" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a></li>
+    <li><a href="#book" class="nav-cta">Book</a></li>
   </ul>
 </nav>
 
