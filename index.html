@@ -42,9 +42,11 @@
 <meta name="entity" content="Ng Zhen Yang, Ethan"/>
 <meta name="entity-type" content="Person; ProfessionalService; LocalBusiness"/>
 <meta name="service-area" content="Singapore"/>
-<!-- Favicons — the "special E" brand mark, generated once and reused everywhere -->
+<!-- Favicons — the "special E" brand mark. SVG is primary (vector, sharp at any
+     size); the 180px PNG is the fallback for browsers without SVG-favicon support
+     and doubles as the Apple touch icon. Browsers downscale it cleanly. -->
 <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+<link rel="icon" type="image/png" sizes="180x180" href="/apple-touch-icon.png">
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
 <meta name="theme-color" content="#f4efe6">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -67,7 +69,7 @@
       "jobTitle": "Independent Technology Contractor",
       "description": "Singapore-based independent technology contractor who builds AI-powered automation systems, modern websites, and WhatsApp chatbots for small businesses. Specialises in WhatsApp chatbot development, website design and development, workflow automation, and managed AI infrastructure for professional services firms including law practices and accounting firms.",
       "url": "https://intraftech.xyz/",
-      "email": "mailto:e.ng.law@outlook.com",
+      "email": "mailto:ethan@intraftech.xyz",
       "telephone": "+65-9128-8942",
       "nationality": { "@type": "Country", "name": "Singapore" },
       "workLocation": { "@type": "Place", "name": "Singapore" },
@@ -90,7 +92,7 @@
         "Generative Engine Optimisation"
       ],
       "knowsLanguage": ["en", "zh"],
-      "sameAs": ["https://cal.com/ethan8305"]
+      "sameAs": ["https://cal.com/ethan8305", "https://www.linkedin.com/in/ethannzy"]
     },
     {
       "@type": ["ProfessionalService", "LocalBusiness"],
@@ -100,7 +102,7 @@
       "image": "https://intraftech.xyz/og-image.png",
       "url": "https://intraftech.xyz/",
       "telephone": "+65-9128-8942",
-      "email": "e.ng.law@outlook.com",
+      "email": "ethan@intraftech.xyz",
       "priceRange": "$$",
       "founder": { "@id": "https://intraftech.xyz/#person" },
       "description": "Trading name of Ng Zhen Yang, Ethan. AI-powered automation, modern websites, and WhatsApp chatbots for small businesses — workflow automation, website design and development, AI website assistants, and managed AI infrastructure for law practices, accounting firms, and other professional services in Singapore.",
@@ -351,7 +353,8 @@
 
   nav ul {
     display: flex;
-    gap: 2.25rem;
+    align-items: center;
+    gap: 1.5rem;
     list-style: none;
   }
   nav ul a {
@@ -374,6 +377,39 @@
   }
   nav ul a:hover { color: var(--ink); }
   nav ul a:hover::after { right: 0; }
+
+  /* LinkedIn icon link — sits inline with the mono text links but shows no
+     underline rule (it's an icon, not a word). Inherits colour so it matches. */
+  nav ul a.nav-icon {
+    display: inline-flex;
+    align-items: center;
+    padding: 0;
+  }
+  nav ul a.nav-icon::after { content: none; }
+  nav ul a.nav-icon svg {
+    width: 1.05rem;
+    height: 1.05rem;
+    display: block;
+    fill: currentColor;
+    transition: transform 0.2s ease;
+  }
+  nav ul a.nav-icon:hover svg { transform: translateY(-1px); }
+
+  /* Book is the conversion CTA — give it a bordered chip so it reads as an
+     action, distinct from the plain dropdown index entries. */
+  nav ul a.nav-cta {
+    color: var(--ink);
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    padding: 0.4rem 0.85rem;
+    transition: background 0.2s ease, color 0.2s ease;
+  }
+  nav ul a.nav-cta::after { content: none; }
+  nav ul a.nav-cta:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--paper);
+  }
 
   /* ── MASTHEAD (HERO) ── */
   .masthead {
@@ -665,6 +701,31 @@
     border-color: var(--accent);
     width: 7px; height: 7px;
   }
+  /* External LinkedIn entry — separated from the section index, glyph instead
+     of a roman numeral, an arrow instead of the progress dot. */
+  .nav-contents-ext { border-top: 1px solid var(--rule); }
+  .nav-contents-ext a .n {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .nav-contents-ext a .n svg {
+    width: 0.9rem; height: 0.9rem;
+    fill: var(--ink-mute);
+    transition: fill 0.2s;
+  }
+  .nav-contents-ext a:hover .n svg { fill: var(--accent); }
+  .nav-contents-ext a .dot.ext {
+    width: auto; height: auto;
+    border: none;
+    border-radius: 0;
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    color: var(--ink-mute);
+    transition: color 0.2s;
+  }
+  .nav-contents-ext a:hover { color: var(--accent); }
+  .nav-contents-ext a:hover .dot.ext { color: var(--accent); }
   .nav-contents-progress {
     margin-top: 1rem;
     padding-top: 0.85rem;
@@ -2020,6 +2081,7 @@
           <li data-section="book"><a href="#book" role="menuitem"><span class="n">vii.</span><span>Book</span><span class="dot" aria-hidden="true"></span></a></li>
           <li data-section="contact"><a href="#contact" role="menuitem"><span class="n">viii.</span><span>Contact</span><span class="dot" aria-hidden="true"></span></a></li>
           <li data-section="colophon"><a href="#colophon" role="menuitem"><span class="n">ix.</span><span>Colophon</span><span class="dot" aria-hidden="true"></span></a></li>
+          <li class="nav-contents-ext"><a href="https://www.linkedin.com/in/ethannzy" role="menuitem" target="_blank" rel="noopener"><span class="n" aria-hidden="true"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></span><span>LinkedIn</span><span class="dot ext" aria-hidden="true">↗</span></a></li>
         </ol>
         <div class="nav-contents-progress">
           <span class="label">Read</span>
@@ -2030,11 +2092,8 @@
     </div>
   </div>
   <ul>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#pricing">Pricing</a></li>
-    <li><a href="#faq">FAQ</a></li>
-    <li><a href="#book">Book</a></li>
+    <li><a href="https://www.linkedin.com/in/ethannzy" class="nav-icon" target="_blank" rel="noopener" aria-label="LinkedIn"><svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></a></li>
+    <li><a href="#book" class="nav-cta">Book</a></li>
   </ul>
 </nav>
 
@@ -2086,6 +2145,9 @@
       </p>
       <p>
         No technical knowledge needed on your side. I scope it, build it, host it, and keep it running.
+      </p>
+      <p>
+        One person, every line of code. No account managers, no handoffs, no "let me check with the dev team." When something needs fixing, you talk to the person who built it.
       </p>
       <span class="magnet">
         <a href="#book" class="deck-cta">
@@ -2426,7 +2488,7 @@
     </div>
     <div class="contact-row">
       <span class="contact-label">Email</span>
-      <span class="contact-value"><a href="mailto:e.ng.law@outlook.com">e.ng.law@outlook.com</a></span>
+      <span class="contact-value"><a href="mailto:ethan@intraftech.xyz">ethan@intraftech.xyz</a></span>
     </div>
     <div class="contact-row">
       <span class="contact-label">Based in</span>
@@ -2467,13 +2529,13 @@
     <p>We retain personal data only as long as necessary to fulfil the purposes outlined in this policy, or as required by law.</p>
 
     <h3>Your Rights</h3>
-    <p>You have the right to request access to, correction of, or deletion of your personal data held by us. To exercise these rights, contact us at <a href="mailto:e.ng.law@outlook.com" style="color: var(--accent);">e.ng.law@outlook.com</a>.</p>
+    <p>You have the right to request access to, correction of, or deletion of your personal data held by us. To exercise these rights, contact us at <a href="mailto:ethan@intraftech.xyz" style="color: var(--accent);">ethan@intraftech.xyz</a>.</p>
 
     <h3>WhatsApp Messaging</h3>
     <p>Our chatbot services operate via the WhatsApp Business API. Messages sent to our clients' business numbers may be processed by AI systems to generate responses. No message content is shared with third parties beyond what is necessary to operate the service.</p>
 
     <h3>Contact</h3>
-    <p>For any privacy-related queries, contact us at: <a href="mailto:e.ng.law@outlook.com" style="color: var(--accent);">e.ng.law@outlook.com</a> or +65 9128 8942.</p>
+    <p>For any privacy-related queries, contact us at: <a href="mailto:ethan@intraftech.xyz" style="color: var(--accent);">ethan@intraftech.xyz</a> or +65 9128 8942.</p>
   </div>
 </section>
 
@@ -2488,6 +2550,12 @@
     <div class="colophon-body reveal">
       <p>
         <span itemprop="name">Ng Zhen Yang, Ethan</span> is a <span itemprop="homeLocation">Singapore</span>-based independent technology contractor who builds <span itemprop="knowsAbout">AI-powered automation systems, WhatsApp chatbots, and modern websites</span> for small businesses. He specialises in WhatsApp chatbot development, website design and development, workflow automation, and managed AI infrastructure for professional services firms including law practices and accounting firms. He operates under the trading name <em itemprop="alternateName">Ng Zhen Yang, Ethan</em>.
+      </p>
+      <p>
+        Most AI services either hand you a generic chatbot and walk away, or build something complex you then have to manage yourself. He does neither — scoping the problem, building the system, hosting it, and improving it over time, so it gets more useful instead of becoming a dead end you paid for once.
+      </p>
+      <p>
+        He works on a monthly retainer with no lock-in, is honest about what AI can and can't do, and builds so that clients keep full ownership of their own data.
       </p>
       <div class="colophon-signature">
         <div>
@@ -2529,8 +2597,9 @@
     </div>
     <div class="foot-col">
       <h5>Contact</h5>
-      <a href="mailto:e.ng.law@outlook.com">e.ng.law@outlook.com</a>
+      <a href="mailto:ethan@intraftech.xyz">ethan@intraftech.xyz</a>
       <a href="https://wa.me/6591288942">+65 9128 8942</a>
+      <a href="https://www.linkedin.com/in/ethannzy" target="_blank" rel="noopener">LinkedIn ↗</a>
       <a href="https://cal.com/ethan8305">Book a call ↗</a>
     </div>
   </div>
@@ -2688,6 +2757,12 @@
   const closeBtn = document.getElementById('chat-close');
   const windowEl = document.getElementById('chat-window');
 
+  // Chat proxy endpoint. Swap this to your Cloudflare Worker URL after
+  // `wrangler deploy` (e.g. https://intraftech-chat.<you>.workers.dev) and
+  // you can shut the Railway service down. Kept as the Railway URL for now
+  // so the widget keeps working until you cut over.
+  const CHAT_ENDPOINT = 'https://intraf-tech-production.up.railway.app/chat';
+
   let history = [];
   let isOpen = false;
   let hasGreeted = false;
@@ -2760,7 +2835,7 @@
     history.push({ role: 'user', content: userText });
     const typingEl = showTyping();
     try {
-      const response = await fetch('https://intraf-tech-production.up.railway.app/chat', {
+      const response = await fetch(CHAT_ENDPOINT, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -2776,7 +2851,7 @@
       history.push({ role: 'assistant', content: reply });
     } catch (err) {
       typingEl.remove();
-      appendMsg('assistant', "Something went wrong on my end. Try refreshing, or reach out directly at e.ng.law@outlook.com.");
+      appendMsg('assistant', "Something went wrong on my end. Try refreshing, or reach out directly at ethan@intraftech.xyz.");
     }
     sendBtn.disabled = false;
     inputEl.focus();

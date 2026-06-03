@@ -1,0 +1,9 @@
+# Cloudflare Worker config for the intraftech.xyz chat proxy.
+# Deploy with:  wrangler deploy
+# Then set the secret:  wrangler secret put ANTHROPIC_API_KEY
+name = "intraftech-chat"
+main = "worker.js"
+compatibility_date = "2024-11-01"
+
+# ANTHROPIC_API_KEY is NOT stored here — it's an encrypted secret set via:
+#   wrangler secret put ANTHROPIC_API_KEY
