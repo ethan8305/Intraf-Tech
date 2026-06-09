@@ -2784,11 +2784,14 @@
   }
   function linkify(text) {
     // 1. Pull markdown-style links out first: [label](url)
-    //    Use a placeholder so the bare-URL pass doesn't double-link them.
+    //    Park each behind a NUL-delimited index so the bare-URL pass doesn't
+    //    double-link them. NUL can't appear in a model reply and isn't touched
+    //    by escapeHtml, so it won't collide with literal numbers in the text
+    //    (e.g. "30 minutes") the way a space-delimited placeholder would.
     const slots = [];
     let s = text.replace(/\[([^\]]+)\]\((https?:\/\/[^\s)]+)\)/g, (_, label, url) => {
       slots.push(makeLink(url, label));
-      return ` ${slots.length - 1} `;
+      return `\u0000${slots.length - 1}\u0000`;
     });
     // 2. Escape remaining HTML
     s = escapeHtml(s);
@@ -2801,7 +2804,7 @@
       return makeLink(clean) + tail;
     });
     // 4. Restore markdown-link slots
-    s = s.replace(/ (\d+) /g, (_, i) => slots[+i]);
+    s = s.replace(/\u0000(\d+)\u0000/g, (_, i) => slots[+i]);
     // 5. Preserve paragraph breaks
     s = s.replace(/\n/g, '<br>');
     return s;
