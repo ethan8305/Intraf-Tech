@@ -2749,7 +2749,7 @@
   document.addEventListener('scroll', updateNavContentsProgress, { passive: true });
   updateNavContentsProgress();
 
-  // System prompt lives server-side (Railway endpoint) — never shipped to the client.
+  // System prompt lives in the Cloudflare Worker — never shipped to the client.
   const messagesEl = document.getElementById('chat-messages');
   const inputEl = document.getElementById('chat-input');
   const sendBtn = document.getElementById('chat-send');
@@ -2757,11 +2757,11 @@
   const closeBtn = document.getElementById('chat-close');
   const windowEl = document.getElementById('chat-window');
 
-  // Chat proxy endpoint. Swap this to your Cloudflare Worker URL after
-  // `wrangler deploy` (e.g. https://intraftech-chat.<you>.workers.dev) and
-  // you can shut the Railway service down. Kept as the Railway URL for now
-  // so the widget keeps working until you cut over.
-  const CHAT_ENDPOINT = 'https://intraf-tech-production.up.railway.app/chat';
+  // Chat proxy endpoint — Cloudflare Worker (see worker.js / wrangler.toml).
+  // The Worker only runs on request, so an idle widget costs nothing.
+  // Deployed via `wrangler deploy`; secret set with
+  // `wrangler secret put ANTHROPIC_API_KEY`.
+  const CHAT_ENDPOINT = 'https://intraftech.ethanishere13.workers.dev/chat';
 
   let history = [];
   let isOpen = false;
