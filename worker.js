@@ -1,9 +1,9 @@
 // ──────────────────────────────────────────────────────────────────────
 // Cloudflare Worker — chat proxy for intraftech.xyz
 //
-// Replaces the always-on Railway/Express server (server.js). A Worker only
-// runs when a request comes in, so an idle chat widget costs nothing — no
-// 24/7 container, no drained credits. Free tier is 100k requests/day.
+// A Worker only runs when a request comes in, so an idle chat widget costs
+// nothing — no 24/7 container, no drained credits. Free tier is 100k
+// requests/day.
 //
 // DEPLOY (one-time):
 //   1. Install Wrangler:        npm i -g wrangler
@@ -11,10 +11,8 @@
 //   3. From this folder:        wrangler deploy
 //   4. Add your API key secret: wrangler secret put ANTHROPIC_API_KEY
 //        (paste the key when prompted — it is stored encrypted, never in code)
-//   5. Wrangler prints a URL like https://intraftech-chat.<you>.workers.dev
+//   5. Wrangler prints a URL like https://intraftech.<you>.workers.dev
 //      Put that URL in index.html (the fetch() in the chat widget).
-//
-// After this works you can delete the Railway service entirely.
 // ──────────────────────────────────────────────────────────────────────
 
 // Browsers may only call /chat from the live site (and the www variant).
