@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="en-SG">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ethan Ng — Digital Card</title>
+<meta name="description" content="Save Ethan Ng's contact, message on WhatsApp, or book a call. Intraf Tech — WhatsApp chatbots, websites & automation, built in Singapore.">
+<link rel="canonical" href="https://intraftech.xyz/card">
+<meta name="theme-color" content="#f4efe6">
+
+<!-- Share preview -->
+<meta property="og:type" content="profile">
+<meta property="og:title" content="Ethan Ng — Digital Card">
+<meta property="og:description" content="Tap to save my contact, message me, or book a call.">
+<meta property="og:url" content="https://intraftech.xyz/card">
+<meta property="og:image" content="https://intraftech.xyz/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300..900&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --paper: #f4efe6;
+    --paper-deep: #ebe4d6;
+    --ink: #1a1612;
+    --ink-soft: #6b6258;
+    --ink-mute: #9c9387;
+    --rule: #d9d0bf;
+    --accent: #d94a1f;
+    --accent-deep: #a93715;
+    --accent-soft: rgba(217, 74, 31, 0.08);
+    --serif: 'Fraunces', 'Times New Roman', serif;
+    --serif-italic: 'Instrument Serif', Georgia, serif;
+    --mono: 'JetBrains Mono', ui-monospace, monospace;
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif);
+    font-weight: 400;
+    line-height: 1.5;
+    min-height: 100dvh;
+    display: flex;
+    justify-content: center;
+    padding: max(1.25rem, env(safe-area-inset-top)) 1.25rem
+             max(1.5rem, env(safe-area-inset-bottom));
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Paper grain, same texture as the main site */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    opacity: 0.35;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1 0 0 0 0 0.08 0 0 0 0 0.06 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+
+  a { color: inherit; text-decoration: none; -webkit-tap-highlight-color: transparent; }
+  ::selection { background: var(--accent); color: var(--paper); }
+
+  .card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 26rem;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* ── Masthead ── */
+  .mark {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .mark svg { width: 26px; height: 26px; display: block; }
+
+  .rule {
+    height: 1px;
+    background: var(--rule);
+    margin: 1.1rem 0 1.4rem;
+  }
+
+  .name {
+    font-size: clamp(2.4rem, 12vw, 3rem);
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    line-height: 1.02;
+  }
+  .name em { font-family: var(--serif-italic); font-style: italic; font-weight: 400; }
+
+  .title {
+    margin-top: 0.5rem;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .tagline {
+    margin-top: 0.85rem;
+    font-size: 1.02rem;
+    color: var(--ink-soft);
+    max-width: 22rem;
+  }
+
+  /* ── Primary CTA: save contact ── */
+  .save {
+    margin-top: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    padding: 1rem 1.25rem;
+    background: var(--accent);
+    color: var(--paper);
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    transition: background 0.18s ease, transform 0.08s ease;
+  }
+  .save:active { transform: scale(0.985); background: var(--accent-deep); }
+  .save svg { width: 17px; height: 17px; }
+
+  /* ── Action list ── */
+  .actions {
+    margin-top: 1.5rem;
+    border-top: 1px solid var(--rule);
+  }
+  .action {
+    display: flex;
+    align-items: center;
+    gap: 0.95rem;
+    padding: 0.95rem 0.15rem;
+    border-bottom: 1px solid var(--rule);
+    transition: padding-left 0.16s ease, background 0.16s ease;
+  }
+  .action:active { background: var(--accent-soft); padding-left: 0.55rem; }
+  .action .ico {
+    flex: none;
+    width: 34px; height: 34px;
+    display: grid;
+    place-items: center;
+    border: 1px solid var(--rule);
+    border-radius: 50%;
+    color: var(--ink);
+  }
+  .action .ico svg { width: 16px; height: 16px; }
+  .action .meta { flex: 1; min-width: 0; }
+  .action .k {
+    font-family: var(--mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .action .v {
+    font-size: 1.02rem;
+    color: var(--ink);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .action .arr { flex: none; color: var(--ink-mute); font-size: 0.9rem; }
+
+  /* ── Share + QR ── */
+  .extras {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.1rem;
+  }
+  .share {
+    display: none;            /* shown via JS when Web Share is supported */
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.7rem 1.1rem;
+    border: 1px solid var(--ink);
+    border-radius: 2px;
+    font-family: var(--mono);
+    font-size: 0.66rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+    background: transparent;
+    cursor: pointer;
+  }
+  .share.on { display: inline-flex; }
+  .share:active { background: var(--ink); color: var(--paper); }
+  .share svg { width: 15px; height: 15px; }
+
+  .qr {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.6rem;
+  }
+  .qr img {
+    width: 132px; height: 132px;
+    padding: 10px;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+  }
+  .qr span {
+    font-family: var(--mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+
+  .foot {
+    margin-top: 1.6rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--rule);
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--mono);
+    font-size: 0.56rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+  }
+  .foot a:active { color: var(--accent); }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; }
+  }
+</style>
+</head>
+<body>
+  <main class="card">
+    <!-- Masthead -->
+    <div class="mark">
+      <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <rect width="32" height="32" fill="#f4efe6" stroke="#d9d0bf" stroke-width="1"/>
+        <rect x="0" y="0" width="32" height="3" fill="#d94a1f"/>
+        <text x="16" y="24" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif" font-style="italic" font-size="22" font-weight="400" fill="#1a1612">E</text>
+      </svg>
+      <span>Intraf&nbsp;Tech · Singapore</span>
+    </div>
+
+    <div class="rule"></div>
+
+    <h1 class="name">Ethan <em>Ng</em></h1>
+    <p class="title">Independent Technology Contractor</p>
+    <p class="tagline">WhatsApp chatbots, websites &amp; automation for small businesses. Built in Singapore — running everywhere.</p>
+
+    <!-- Save contact (vCard) -->
+    <a class="save" href="/card/ethan-ng.vcf" download="ethan-ng.vcf" type="text/vcard" id="save">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><line x1="19" y1="2" x2="19" y2="8"/><line x1="22" y1="5" x2="16" y2="5"/>
+      </svg>
+      Save to contacts
+    </a>
+
+    <!-- One-tap channels -->
+    <nav class="actions">
+      <a class="action" href="https://wa.me/6591288942">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.38a9.9 9.9 0 0 0 4.69 1.19h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7-1.87-1.87-4.36-2.9-7-2.9zm0 1.8c2.16 0 4.18.84 5.71 2.37a8.04 8.04 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.09 8.09a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.07.8.82-2.99-.2-.31a8.05 8.05 0 0 1-1.24-4.3c0-4.46 3.63-8.08 8.09-8.08zm-2.66 4.34c-.13 0-.34.05-.52.24-.18.2-.69.68-.69 1.65 0 .97.71 1.91.81 2.04.1.13 1.39 2.12 3.37 2.97.47.2.84.33 1.12.42.47.15.9.13 1.24.08.38-.06 1.17-.48 1.33-.94.16-.46.16-.86.12-.94-.05-.08-.18-.13-.38-.23-.2-.1-1.17-.58-1.35-.64-.18-.07-.31-.1-.44.1-.13.2-.51.64-.62.77-.11.13-.23.15-.43.05-.2-.1-.84-.31-1.6-.99-.59-.53-.99-1.18-1.1-1.38-.11-.2-.01-.31.09-.41.09-.09.2-.23.3-.35.1-.12.13-.2.2-.34.07-.13.03-.25-.02-.35-.05-.1-.44-1.08-.62-1.48-.16-.38-.32-.33-.44-.34l-.37-.01z"/></svg></span>
+        <span class="meta"><span class="k">WhatsApp · Phone</span><span class="v">+65 9128 8942</span></span>
+        <span class="arr">↗</span>
+      </a>
+      <a class="action" href="tel:+6591288942">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
+        <span class="meta"><span class="k">Call directly</span><span class="v">+65 9128 8942</span></span>
+        <span class="arr">↗</span>
+      </a>
+      <a class="action" href="mailto:ethan@intraftech.xyz">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></span>
+        <span class="meta"><span class="k">Email</span><span class="v">ethan@intraftech.xyz</span></span>
+        <span class="arr">↗</span>
+      </a>
+      <a class="action" href="https://www.linkedin.com/in/ethannzy" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></span>
+        <span class="meta"><span class="k">LinkedIn</span><span class="v">in/ethannzy</span></span>
+        <span class="arr">↗</span>
+      </a>
+      <a class="action" href="https://cal.com/ethan8305" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
+        <span class="meta"><span class="k">Book a free consult</span><span class="v">30-min call</span></span>
+        <span class="arr">↗</span>
+      </a>
+      <a class="action" href="https://intraftech.xyz" target="_blank" rel="noopener">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
+        <span class="meta"><span class="k">Website</span><span class="v">intraftech.xyz</span></span>
+        <span class="arr">↗</span>
+      </a>
+    </nav>
+
+    <div class="extras">
+      <button class="share" id="share" type="button">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+        Share this card
+      </button>
+      <div class="qr">
+        <img src="/card/qr.svg" alt="QR code linking to intraftech.xyz/card" width="132" height="132">
+        <span>Scan to open</span>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span>Trading as Intraf&nbsp;Tech</span>
+      <a href="https://intraftech.xyz">intraftech.xyz ↗</a>
+    </div>
+  </main>
+
+  <script>
+    // Web Share API — progressive enhancement; the button only appears if supported.
+    (function () {
+      var btn = document.getElementById('share');
+      if (!navigator.share || !btn) return;
+      btn.classList.add('on');
+      btn.addEventListener('click', function () {
+        navigator.share({
+          title: 'Ethan Ng — Intraf Tech',
+          text: "Ethan Ng's contact card",
+          url: 'https://intraftech.xyz/card'
+        }).catch(function () { /* user dismissed — ignore */ });
+      });
+    })();
+  </script>
+</body>
+</html>
