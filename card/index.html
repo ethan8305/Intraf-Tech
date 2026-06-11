@@ -143,46 +143,47 @@
   .save:active { transform: scale(0.985); background: var(--accent-deep); }
   .save svg { width: 17px; height: 17px; }
 
-  /* ── Action list ── */
-  .actions {
+  /* ── Contact rows — same format as the main site's contact section ── */
+  .contact-grid {
     margin-top: 1.5rem;
     border-top: 1px solid var(--rule);
   }
-  .action {
-    display: flex;
-    align-items: center;
-    gap: 0.95rem;
-    padding: 0.95rem 0.15rem;
-    border-bottom: 1px solid var(--rule);
-    transition: padding-left 0.16s ease, background 0.16s ease;
-  }
-  .action:active { background: var(--accent-soft); padding-left: 0.55rem; }
-  .action .ico {
-    flex: none;
-    width: 34px; height: 34px;
+  .contact-row {
     display: grid;
-    place-items: center;
-    border: 1px solid var(--rule);
-    border-radius: 50%;
-    color: var(--ink);
+    grid-template-columns: 110px 1fr;
+    gap: 1.25rem;
+    padding: 1.05rem 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: baseline;
   }
-  .action .ico svg { width: 16px; height: 16px; }
-  .action .meta { flex: 1; min-width: 0; }
-  .action .k {
+  .contact-label {
     font-family: var(--mono);
-    font-size: 0.56rem;
-    letter-spacing: 0.16em;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--ink-mute);
   }
-  .action .v {
-    font-size: 1.02rem;
-    color: var(--ink);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
+  .contact-value {
+    font-family: var(--serif);
+    font-size: 1.05rem;
+    font-weight: 400;
+    min-width: 0;
+    overflow-wrap: break-word;
   }
-  .action .arr { flex: none; color: var(--ink-mute); font-size: 0.9rem; }
+  .contact-value a { border-bottom: 1px solid transparent; transition: color 0.2s; }
+  .contact-value a:active { color: var(--accent); border-color: var(--accent); }
+  .contact-aside {
+    font-family: var(--mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-mute);
+    margin-left: 0.65rem;
+    padding-left: 0.65rem;
+    border-left: 1px solid var(--rule);
+    white-space: nowrap;
+  }
+  .contact-aside a:active { color: var(--accent); }
 
   /* ── Share + QR ── */
   .extras {
@@ -277,39 +278,36 @@
       Save to contacts
     </a>
 
-    <!-- One-tap channels -->
-    <nav class="actions">
-      <a class="action" href="https://wa.me/6591288942">
-        <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12.04 2c-5.46 0-9.9 4.44-9.9 9.9 0 1.75.46 3.45 1.32 4.95L2.05 22l5.3-1.38a9.9 9.9 0 0 0 4.69 1.19h.01c5.46 0 9.9-4.44 9.9-9.9 0-2.64-1.03-5.13-2.9-7-1.87-1.87-4.36-2.9-7-2.9zm0 1.8c2.16 0 4.18.84 5.71 2.37a8.04 8.04 0 0 1 2.37 5.72c0 4.46-3.63 8.09-8.09 8.09a8.1 8.1 0 0 1-4.13-1.13l-.3-.18-3.07.8.82-2.99-.2-.31a8.05 8.05 0 0 1-1.24-4.3c0-4.46 3.63-8.08 8.09-8.08zm-2.66 4.34c-.13 0-.34.05-.52.24-.18.2-.69.68-.69 1.65 0 .97.71 1.91.81 2.04.1.13 1.39 2.12 3.37 2.97.47.2.84.33 1.12.42.47.15.9.13 1.24.08.38-.06 1.17-.48 1.33-.94.16-.46.16-.86.12-.94-.05-.08-.18-.13-.38-.23-.2-.1-1.17-.58-1.35-.64-.18-.07-.31-.1-.44.1-.13.2-.51.64-.62.77-.11.13-.23.15-.43.05-.2-.1-.84-.31-1.6-.99-.59-.53-.99-1.18-1.1-1.38-.11-.2-.01-.31.09-.41.09-.09.2-.23.3-.35.1-.12.13-.2.2-.34.07-.13.03-.25-.02-.35-.05-.1-.44-1.08-.62-1.48-.16-.38-.32-.33-.44-.34l-.37-.01z"/></svg></span>
-        <span class="meta"><span class="k">WhatsApp · Phone</span><span class="v">+65 9128 8942</span></span>
-        <span class="arr">↗</span>
-      </a>
-      <a class="action" href="tel:+6591288942">
-        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.9.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></span>
-        <span class="meta"><span class="k">Call directly</span><span class="v">+65 9128 8942</span></span>
-        <span class="arr">↗</span>
-      </a>
-      <a class="action" href="mailto:ethan@intraftech.xyz">
-        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg></span>
-        <span class="meta"><span class="k">Email</span><span class="v">ethan@intraftech.xyz</span></span>
-        <span class="arr">↗</span>
-      </a>
-      <a class="action" href="https://www.linkedin.com/in/ethannzy" target="_blank" rel="noopener">
-        <span class="ico"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.35V9h3.41v1.56h.05c.48-.9 1.63-1.85 3.36-1.85 3.6 0 4.27 2.37 4.27 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg></span>
-        <span class="meta"><span class="k">LinkedIn</span><span class="v">in/ethannzy</span></span>
-        <span class="arr">↗</span>
-      </a>
-      <a class="action" href="https://cal.com/ethan8305" target="_blank" rel="noopener">
-        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></span>
-        <span class="meta"><span class="k">Book a free consult</span><span class="v">30-min call</span></span>
-        <span class="arr">↗</span>
-      </a>
-      <a class="action" href="https://intraftech.xyz" target="_blank" rel="noopener">
-        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg></span>
-        <span class="meta"><span class="k">Website</span><span class="v">intraftech.xyz</span></span>
-        <span class="arr">↗</span>
-      </a>
-    </nav>
+    <!-- Contact — same format as the main site's contact section -->
+    <div class="contact-grid">
+      <div class="contact-row">
+        <span class="contact-label">WhatsApp / Phone</span>
+        <span class="contact-value">
+          <a href="https://wa.me/6591288942">+65 9128 8942</a>
+          <span class="contact-aside"><a href="https://wa.me/6591288942">message</a> · <a href="tel:+6591288942">call</a></span>
+        </span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">Email</span>
+        <span class="contact-value"><a href="mailto:ethan@intraftech.xyz">ethan@intraftech.xyz</a></span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">LinkedIn</span>
+        <span class="contact-value"><a href="https://www.linkedin.com/in/ethannzy" target="_blank" rel="noopener">in/ethannzy</a></span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">Book a call</span>
+        <span class="contact-value"><a href="https://cal.com/ethan8305" target="_blank" rel="noopener">cal.com/ethan8305</a></span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">Website</span>
+        <span class="contact-value"><a href="https://intraftech.xyz">intraftech.xyz</a></span>
+      </div>
+      <div class="contact-row">
+        <span class="contact-label">Based in</span>
+        <span class="contact-value">Singapore</span>
+      </div>
+    </div>
 
     <div class="extras">
       <button class="share" id="share" type="button">
